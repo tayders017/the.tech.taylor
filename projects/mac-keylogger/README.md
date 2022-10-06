@@ -27,9 +27,9 @@ Add the THIS and THAT in your EXAMPLE
 
 Install This
 
-    EXAMPLE OF INSTALL
+    EXAMPLE OF INSTALL.
 
 Then Install This
 
-    EXAMPLE OF INSTALL
+    EXAMPLE OF INSTALL.
 
