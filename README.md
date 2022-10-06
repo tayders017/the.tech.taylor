@@ -7,5 +7,5 @@ Table of contents
 =================
 
 <!--ts-->
-   * [Projects](#projects)
-      * [Mac Keylogger](#mac-keylogger)
+   * [Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects)
+      * [Mac Keylogger](https://github.com/tayders017/the.tech.taylor/tree/main/projects/mac-keylogger)
