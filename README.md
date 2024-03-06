@@ -10,3 +10,4 @@ Table of contents
    * [Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects)
       * [Mac Keylogger](https://github.com/tayders017/the.tech.taylor/tree/main/projects/mac-keylogger)
       * [Caesar Cipher](https://github.com/tayders017/the.tech.taylor/blob/main/projects/Cryptography/CaesarCipher.py)
+      * [Security Audits](https://github.com/tayders017/the.tech.taylor/tree/main/projects/SecurityAudits/BotiumToys)
