@@ -1,3 +1,7 @@
+#Project overview: Create design using print.
+
+
+#Print peace sign design
 print("    *****************************    ")
 print("    *****************************    ")
 print("   *              *              *   ") 
