@@ -3,7 +3,7 @@ Documentation for Project_Grafanista
 -->
 <div align="center">
 
-  <img src="assets/logo.png" alt="logo" width="200" height="auto" />
+  <img src="assets/projlogo.png" alt="project-logo" width="200" height="auto" />
   <h1>Project Grafanista Documentation
 </h1>
   
@@ -313,7 +313,7 @@ python3 weather_exporter.py $
 ```
 
 
-<!-- Contributing -->
+<!-- Challenges encountered throughout project and solutions to said challenges, as well as enhancement opportunities -->
 ## :wave: Challenges and Solutions
 
 
@@ -331,11 +331,16 @@ Challenges incurred throughout the project with solutions:
   ```
   https://builtin.com/articles/error-externally-managed-environment
   ```
-- To enhance the configuration and make it more robust, Prometheus could be ran from a Docker container, this would provide advanced scalability and would allow for further isolation from the host system.
+Enhancements that can be made to project:
+- To enhance the configuration and make it more robust, Prometheus could be ran from a Docker container.
+  - This would provide advanced scalability and would allow further isolation from the host system.
   - The following documentation provides details on this: Install Docker Engine on Ubuntu - 
   ```
   https://docs.docker.com/engine/install/ubuntu/
   ```
+- To enhance security, Advance Auth can be configured for the stack in Grafana.
+  - <insert screenshot - advauthss.png>
+- 
 
 
 <!-- Conclusion -->
