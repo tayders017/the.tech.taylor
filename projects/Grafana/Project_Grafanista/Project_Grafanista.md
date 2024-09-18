@@ -3,7 +3,7 @@ Documentation for Project_Grafanista
 -->
 <div align="center">
 
-  <img src="assets/projlogo.png" alt="project-logo" width="200" height="auto" />
+  <img src="assets/projlogo.png" alt="project-logo" width="500" height="auto" />
   <h1>Project Grafanista Documentation
 </h1>
   
