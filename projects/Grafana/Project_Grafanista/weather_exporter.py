@@ -3,7 +3,7 @@ import requests
 import time
 
 #Add OpenWeatherMap API key
-API_KEY = 'your_openweathermap_api_key'
+API_KEY = 'OPENWEATHERMAP_API_KEY'
 
 #Add list of cities to monitor, can be added as city name or city ID
 cities = ['Austin', 'Los Angeles', 'Portland', 'New York', 'Stockholm']
