@@ -284,10 +284,9 @@ Lastly, restart Prometheus so the changes to the configuration are applied:
 Create a new dashboard in Grafana to view the weather metrics data.
 - In the Grafana Cloud UI, go to Dashboards and select New Dashboard.
 - Add panels and query your custom metrics (e.g., city_temperature_celsius{city="Stockholm"}) to visualize the weather data.
-- Here is an example of the panel query: 
-  - <a href="" /><img src="assets/dashquery.png" alt="dash-query" width="300" height="auto" />
-- Update the Legend with "Custom" so the label for the query is easier to read.
-  - <a href="" /><img src="assets/dashquerylegend.png" alt="dash-query-legend" width="300" height="auto" />
+- Here is an example of the panel query and the Legend updated with "Custom" config making the label for the query is easier to read: 
+<a href="" /><img src="assets/dashquery.png" alt="dash-query" width="300" height="auto" />
+<a href="" /><img src="assets/dashquerylegend.png" alt="dash-query-legend" width="300" height="auto" />
 
 <!-- Usage tips; things to note when referencing any details included in this document -->
 ## :warning: Usage Tips
