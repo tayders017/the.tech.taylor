@@ -8,7 +8,7 @@ Documentation for Project_Grafanista
 </h1>
   
   <p>
-    Setting Up Grafana Cloud with Prometheus and OpenWeatherMap API for Weather Data Visualization
+    This documentation goes over the process of configuring Prometheus to use the OpenWeatherMap API to ultimately gather weather data and then visualize this data in Grafana Cloud.
   </p>
 
   <p>
@@ -19,7 +19,7 @@ Documentation for Project_Grafanista
 <!-- Badges -->
 <p>
   <a href="">
-    <img src="https://img.shields.io/badge/Grafana-F2F4F9?style=for-the-badge&logo=grafana&logoColor=orange&labelColor=F2F4F9" />
+    <img src="https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white" />
   </a>
   <a href="">
     <img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" />
@@ -30,9 +30,9 @@ Documentation for Project_Grafanista
 </p>
    
 <h4>
-    <a href="https://github.com/tayders017/the.tech.taylor/tree/main/projects/Grafana/Project_Grafanista/dash_demo_img.jpg">View Dashboard Demo</a>
+    <a href="https://github.com/tayders017/the.tech.taylor/tree/main/projects/Grafana/Project_Grafanista/assets/grafana_weather_dash.png">View Dashboard Example</a>
   <span> · </span>
-    <a href="https://github.com/tayders017/the.tech.taylor/tree/main/projects/Grafana/Project_Grafanista/README.md">Documentation</a>
+    <a href="https://github.com/tayders017/the.tech.taylor/tree/main/projects/Grafana/Project_Grafanista/Project_Grafanista.md">Documentation</a>
   </h4>
 </div>
 
@@ -48,15 +48,16 @@ Documentation for Project_Grafanista
 - [Getting Started](#toolbox-getting-started)
   * [Prerequisites](#bangbang-prerequisites)
   * [Installation](#gear-installation)
-  * [Run Script](#test_tube-run-script)
-  * [Edit Prometheus Configuration](#running-edit-prometheus-configuration)
-  * [Create Grafana Account](#triangular_flag_on_post-create-grafana-account)
-  * [Integrate Prometheus](#triangular_flag_on_post-integrate-prometheus)
-  * [Create Dashboard](#triangular_flag_on_post-create-dashboard)
-- [Configuration](#eyes-configuration)
-- [Challenges and Solutions](#wave-challenges-and-solutions)
-- [Conclusion](#grey_question-conclusion)
-- [Acknowledgements](#gem-acknowledgements)
+  * [Run Script to Get Weather Data](#running-run-script-to-get-weather-data)
+  * [Edit Prometheus Configuration](#memo-edit-prometheus-configuration)
+  * [Create Grafana Account](#white_check_mark-create-grafana-account)
+  * [Integrate Prometheus](#paperclips-integrate-prometheus)
+  * [Create Dashboard Visualization](#chart_with_upwards_trend-create-dashboard)
+- [Usage Tips](#warning-usage-tips)
+- [Challenges and Solutions](#triangular_flag_on_post-challenges-and-solutions)
+- [Enhancements](#bulb-enhancements)
+- [Conclusion](#eight_pointed_black_star-conclusion)
+- [References](#gem-references)
 
   
 <!-- Introduction -->
@@ -67,7 +68,7 @@ Documentation for Project_Grafanista
 ### :camera: Screenshots
 
 <div align="center"> 
-  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" />
+  <img src="assets/grafana_weather_dash.png" alt="screenshot" width="400" height="400" />
 </div>
 
 
@@ -75,38 +76,31 @@ Documentation for Project_Grafanista
 ### :space_invader: Tech Stack
 
 <details>
-  <summary>Host Client</summary>
+  <summary>OS/Virtualization</summary>
   <ul>
-    <li><a href="https://www.typescriptlang.org/">VirtualBox</a></li>
-    <li><a href="https://nextjs.org/">Ubuntu</a></li>
+    <li><a href="https://www.virtualbox.org/">VirtualBox</a></li>
+    <li><a href="https://ubuntu.com/download/">Ubuntu</a></li>
   </ul>
 </details>
 
 <details>
-  <summary>Server</summary>
+  <summary>Monitoring/Data Collection</summary>
   <ul>
-    <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
-    <li><a href="https://expressjs.com/">Express.js</a></li>
-    <li><a href="https://go.dev/">Golang</a></li>
-    <li><a href="https://nestjs.com/">Nest.js</a></li>
-    <li><a href="https://socket.io/">SocketIO</a></li>
-    <li><a href="https://www.prisma.io/">Prisma</a></li>    
-    <li><a href="https://www.apollographql.com/">Apollo</a></li>
-    <li><a href="https://graphql.org/">GraphQL</a></li>
+    <li><a href="https://prometheus.io/">Prometheus</a></li>
   </ul>
 </details>
 
 <details>
-<summary>Database</summary>
+<summary>Data Source/External API</summary>
   <ul>
-    <li><a href="https://www.mysql.com/">MySQL</a></li>
+    <li><a href="https://openweathermap.org/api/">OpenWeatherMap API</a></li>
   </ul>
 </details>
 
 <details>
-<summary>DevOps</summary>
+<summary>Data Visualization/Cloud Monitoring</summary>
   <ul>
-    <li><a href="https://www.docker.com/">Docker</a></li>
+    <li><a href="https://grafana.com/products/cloud/">Grafana</a></li>
   </ul>
 </details>
 
@@ -114,11 +108,14 @@ Documentation for Project_Grafanista
 <!-- Env Variables -->
 ### :key: Environment Variables
 
-To run this project, you will need to generate an API key from OpenWeatherMap.
+Must have an OpenWeatherMap API key in order to have access to weather data.
 
-`API_KEY`
+To get an OpenWeatherMap API key:
+- Sign up for a free OWM account, link here: <a href="https://openweathermap.org/">OpenWeatherMap</a>
+- Once logged in, navigate to API keys and either use a key that is already active or generate a new API key.
+- After the key is generated it can now be copied and pasted into the script (or wherever else it is needed).
+<a href="" /><img src="assets/owmapikey.png" alt="openweathermap-api-key" width="300" height="auto" />
 
-`ANOTHER_API_KEY`
 
 <!-- Getting Started -->
 ## 	:toolbox: Getting Started
@@ -129,15 +126,10 @@ To run this project, you will need to generate an API key from OpenWeatherMap.
 This project will be performed on a clean Ubuntu VM that was created in VirtualBox with Python and Pip installed.
 
 Before starting, verified the following tools and services were installed or available:
-* Prometheus installed and running.
-* Grafana Cloud account.
-* OpenWeatherMap API key.
+- Prometheus installed and running.
+- Grafana Cloud account.
+- OpenWeatherMap API key.
 
-This project uses prometheus_client Python library to expose weather data as Prometheus metrics.
-
-```bash
- pip install prometheus_client
-```
 
 <!-- Installing prometheus_client Python library -->
 ### :gear: Installation
@@ -156,7 +148,7 @@ Run updates:
   sudo apt upgrade
 ```
 
-Next, install the prometheus_client Python library.
+Next, install the prometheus_client Python library. This allows the weather data to be exposed as Prometheus metrics.
 
 Run the following to install the prometheus_client Python library:
 
@@ -165,17 +157,14 @@ Run the following to install the prometheus_client Python library:
 ```
 
 <!-- Create and run a python script to get weather data -->
-### :test_tube: Run Script
+### :running: Run Script to Get Weather Data
 
 Use a python script and the OpenWeatherMap API to periodically get weather data, expose the data as Prometheus metrics, and run a simple HTTP server to allow Prometheus to scrape the weather metrics.
 
 Use script weather_exporter.py located in this GitHub project:
 - <a href="https://github.com/tayders017/the.tech.taylor/tree/main/projects/Grafana/Project_Grafanista/weather_exporter.py">/weather_exporter.py</a>
 - Update the script to reflect the correct API_KEY information and to ensure it has the desired 'cities' to pull data for listed.
-  - To get an OpenWeatherMap API:
-    - Sign up for a free account, link here: <a href="https://openweathermap.org/">OpenWeatherMap</a>
-    - Once logged in, navigate to API keys and activate a new API key.
-    - After the key is active it can now be copied and pasted into the script (or wherever else it is needed).
+  - Steps on generating OpenWeatherMap API key are covered above.
 
 Run the script to start the server:
 
@@ -192,7 +181,7 @@ Open your web browser and navigate to:
 ```
 
 <!-- Edit configuration for Prometheus to Scrape Weather Data -->
-### :running: Edit Prometheus Configuration
+### :memo: Edit Prometheus Configuration
 
 Update the prometheus.yml file to add the Python script as a target.
 
@@ -201,7 +190,7 @@ Locate the prometheus.yml file by running the following command and verifying th
 ```bash
   sudo systemctl status prometheus
 ```
-<a href="" /><img src="assets/chkcfgloc.png" alt="check_config" width="100" height="auto" />
+<a href="" /><img src="assets/chkcfgloc.png" alt="check_config" width="300" height="auto" />
 
 Then update the prometheus.yml, this can be done via TextEdit or cli:
 
@@ -217,7 +206,7 @@ Update the file and save when finished:
     static_configs: 
       - targets: ['<VM_IP>:8000']
 ```
-- If you need to check what the IP is for the VM, run the following command:
+- If needed, verify the IP for the VM by running the following command:
 ```bash
   ifconfig
 ```
@@ -228,14 +217,19 @@ Lastly, restart Prometheus anytime changes are made to the .yml for the configur
   sudo systemctl restart prometheus
 ```
 
-Run the below command to check the status of Prometheus:
+Run the below command to check the status of Prometheus and make sure it is running again:
 
 ```bash
   sudo systemctl status prometheus
 ```
+- If Prometheus needs to be started, run the following command:
+
+```bash
+  sudo systemctl start prometheus
+```
 
 <!-- Set up Grafana Cloud Account (free version) -->
-### :triangular_flag_on_post: Create Grafana Cloud Account
+### :white_check_mark: Create Grafana Cloud Account
 
 Sign up for a Grafana Cloud account through the Grafana site.
 
@@ -251,8 +245,8 @@ After the account is active, access your Grafana Cloud portal home.
   https://<GRAFANA_ACCOUNT_NAME>.grafana.net/a/cloud-home-app
 ```
 
-<!-- Integrate Prometheus with Grafana Cloud -->
-### :triangular_flag_on_post: Integrate Prometheus
+<!-- Integrate Prometheus with Grafana Cloud (aka. add new data source) -->
+### :paperclips: Integrate Prometheus
 
 Configure local Prometheus instance to push metrics to Grafana Cloud using the provided remote_write URL and API Key by creating a Prometheus data source in Grafana Cloud so the weather data can be further visualized.
 
@@ -264,14 +258,14 @@ Find and gather the Remote Write Endpoint URL and API Key under the settings for
 - Example of URL:
 
 ```
-https://prometheus-blocks-us-central1.grafana.net/api/prom/push
+  https://prometheus-blocks-us-central1.grafana.net/api/prom/push
 ```
 
 Use the Remote Write Endpoint URL and the API Key to update the Prometheus configuration file.
 
 ```bash
 remote_write:
-  - url:  'https://prometheus-us-example-URL.grafana.net/api/prom/push' 
+  - url:  'https://prometheus-us-1-example.grafana.net/api/prom/push' 
     basic_auth: 
       username: <Grafana_Cloud_Username>
       password: <Grafana_Cloud_API_Key>
@@ -285,37 +279,36 @@ Lastly, restart Prometheus so the changes to the configuration are applied:
 ```
 
 <!-- Create dashboard(s) in Grafana Cloud to visualize the data -->
-### :triangular_flag_on_post: Create Dashboard
+### :chart_with_upwards_trend: Create Dashboard Visualization
 
 Create a new dashboard in Grafana to view the weather metrics data.
 - In the Grafana Cloud UI, go to Dashboards and select New Dashboard.
 - Add panels and query your custom metrics (e.g., city_temperature_celsius{city="Stockholm"}) to visualize the weather data.
 - Here is an example of the panel query: 
-<a href="" /><img src="assets/dashqueryex.png" alt="dash_query" width="100" height="auto" />
-- Update the “Legend” with 'Custom' so the label for the query is easier to read.
-<a href="" /><img src="assets/dashqueryex.png" alt="dash_query" width="100" height="auto" />
+<a href="" /><img src="assets/dashquery.png" alt="dash-query" width="300" height="auto" />
+- Update the Legend with "Custom" so the label for the query is easier to read.
+<a href="" /><img src="assets/dashquerylegend.png" alt="dash-query-legend" width="300" height="auto" />
 
-<!-- Usage -->
-## :eyes: Usage
+<!-- Usage tips; things to note when referencing any details included in this document -->
+## :warning: Usage Tips
 
-Below are tips when referencing any steps in this project documentation.
+Below are a few tips when referencing any steps in this project documentation.
 
 Enable Prometheus to start on boot:
 
 ```bash
-sudo systemctl enable prometheus
+  sudo systemctl enable prometheus
 ```
 
 To keep the script running in the background, run:
 
 ```bash
-python3 weather_exporter.py $
+  python3 weather_exporter.py $
 ```
 
 
 <!-- Challenges encountered throughout project and solutions to said challenges, as well as enhancement opportunities -->
-## :wave: Challenges and Solutions
-
+## :triangular_flag_on_post: Challenges and Solutions
 
 Challenges incurred throughout the project with solutions:
 - API Limitations:
@@ -323,20 +316,25 @@ Challenges incurred throughout the project with solutions:
 - Incountered error "Error: externally-managed-environment":
   - Resolve by running:
   ```bash
-  python3 -m venv ~/py_envs
-  source ~/py_envs/bin/activate
-  python3 -m pip install xyz
+    python3 -m venv ~/py_envs
+    source ~/py_envs/bin/activate
+    python3 -m pip install xyz
   ```
   - Review the following article for more in depth details on the error:
   ```
-  https://builtin.com/articles/error-externally-managed-environment
+    https://builtin.com/articles/error-externally-managed-environment
   ```
-Enhancements that can be made to project:
+  
+
+<!-- Challenges encountered throughout project and solutions to said challenges, as well as enhancement opportunities -->
+## :bulb: Enhancements
+
+Enhancements that can be made to project for future release:
 - To enhance the configuration and make it more robust, Prometheus could be ran from a Docker container.
   - This would provide advanced scalability and would allow further isolation from the host system.
   - The following documentation provides details on this: Install Docker Engine on Ubuntu - 
   ```
-  https://docs.docker.com/engine/install/ubuntu/
+    https://docs.docker.com/engine/install/ubuntu/
   ```
 - To enhance security, Advance Auth can be configured for the stack in Grafana.
   - <insert screenshot - advauthss.png>
@@ -344,7 +342,7 @@ Enhancements that can be made to project:
 
 
 <!-- Conclusion -->
-## :grey_question: Conclusion
+## :eight_pointed_black_star: Conclusion
 
 - Things learned throughout project:
 
@@ -357,6 +355,7 @@ Enhancements that can be made to project:
 The below section provides useful resources and libraries used in the project and documentation.
 
  - [Shields.io](https://shields.io/)
+ - [emoji-cheat-sheet](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#other-object)
  - [Awesome Readme Template](https://github.com/Louis3797/awesome-readme-template/blob/main/README.md)
  - [Configure Prometheus](https://grafana.com/docs/grafana/latest/datasources/prometheus/configure-prometheus-data-source/)
  - [OpenWeatherMap API Getting Started](https://openweathermap.org/appid)
