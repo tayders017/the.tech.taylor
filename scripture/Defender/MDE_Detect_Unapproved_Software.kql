@@ -1,0 +1,70 @@
+1️⃣ Define the Approved Software List
+> Maintain a centralized list of approved applications.
+> Store the list in a Microsoft Sentinel Watchlist instead of a Log Analytics table to reduce costs.
+> Regularly update the list via automation via Intune - leverage Application Control policies.
+
+2️⃣ Use Defender’s Built-in Software Inventory
+> Query Installed Software Using KQL in Microsoft Defender.
+> Run this query in Microsoft Defender’s Advanced Hunting:
+    DeviceTvmSoftwareInventory
+    | project DeviceName, SoftwareName, ExecutableFileName, SoftwareVersion, InstallDate
+> This provides a real-time list of installed software on endpoints.
+
+3️⃣ Compare Installed Software with the Approved List
+> Find Unapproved Software
+    DeviceTvmSoftwareInventory
+    | project DeviceName, SoftwareName, ExecutableFileName, SoftwareVersion, InstallDate
+    | join kind=leftanti (
+      watchlist('ApprovedSoftwareWatchlist')
+      | project AppName, Executable
+    ) on $left.SoftwareName == $right.AppName
+    | order by DeviceName asc
+> What this does:
+  > Shows all installed software that is NOT in the approved list.
+  > Helps identify unauthorized applications.
+  > Action: Investigate unapproved software, check risk levels, and remediate if necessary.
+
+4️⃣ Set Up Automated Alerts for Unapproved Software
+> Create a Custom Detection Rule in Defender
+    > Go to Microsoft Defender Security Portal.
+    > Navigate to Hunting → Custom Detection Rules.
+    > Click + Create → Custom Rule.
+      > Use the above KQL query as the detection logic.
+      > Set Alert Severity:
+        > High → If critical security risks (e.g., hacking tools).
+
+5️⃣ Configure Remediation via Microsoft Intune
+> Use Intune App Protection Policies:
+  > Block unauthorized apps via Application Control.
+> Deploy PowerShell scripts to uninstall unapproved software.
+  > Example PowerShell Script to Remove Unauthorized Software:
+      $UnapprovedApps = @("unwanted.exe", "bannedsoftware.exe")
+      foreach ($app in $UnapprovedApps) {
+        Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name LIKE '%$app%'" | ForEach-Object { $_.Uninstall() }
+      }
+> Deploy this via Intune or Defender Live Response.
+  > Medium → If productivity impact (e.g., unauthorized browsers).
+  > Low → If policy compliance checks.
+> Benefit: Defender will automatically alert your SOC/Security team when unapproved software is found.
+
+
+6️⃣ Enable Attack Surface Reduction (ASR) Rules
+> ASR blocks potentially unwanted applications (PUAs).
+> Enforce AppLocker or Microsoft Defender Application Control (MDAC) to prevent execution of unapproved software.
+> Set Defender ASR to block potentially unwanted apps:
+    Set-MpPreference -PUAProtection Enabled
+
+7️⃣ Monitor with Microsoft Sentinel (Optional)
+> If using Microsoft Sentinel, create a custom rule in Log Analytics:
+    DeviceTvmSoftwareInventory
+    | where SoftwareName !in (watchlist('ApprovedSoftwareWatchlist') | project AppName)
+> This allows real-time dashboards & alerts for unapproved software detection.
+
+🚀 Summary: Key Best Practices
+✅ Maintain an updated software list in a Microsoft Sentinel Watchlist.
+✅ Use Defender’s DeviceTvmSoftwareInventory to track installed software.
+✅ Compare installed vs. approved apps using KQL queries.
+✅ Create custom alerts in Defender for Endpoint.
+✅ Use Intune or PowerShell for automated remediation.
+✅ Enhance security with Attack Surface Reduction (ASR) rules.
+✅ (Optional) Use Sentinel for centralized monitoring.
