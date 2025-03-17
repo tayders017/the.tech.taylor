@@ -1,0 +1,13 @@
+# Updated Query for Finding Unapproved Software Without ExecutableFileName
+
+DeviceTvmSoftwareInventory
+| project DeviceName, SoftwareName, SoftwareVersion, InstallDate
+| join kind=leftouter (
+    DeviceFileEvents
+    | project DeviceName, FileName
+) on DeviceName
+| join kind=leftanti (
+    watchlist('ApprovedSoftwareWatchlist')
+    | project AppName
+) on $left.SoftwareName == $right.AppName
+| order by DeviceName asc
