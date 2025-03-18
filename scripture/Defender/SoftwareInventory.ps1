@@ -1,5 +1,13 @@
-# Output file path
-$outputFile = "C:\ProgramData\SoftwareInventory.json"
+# Define output file path
+$outputFile = "C:\ProgramData\Inventory\SoftwareInventory.json"
+
+# Get the directory path from the output file path
+$outputDirectory = [System.IO.Path]::GetDirectoryName($outputFile)
+
+# Check if the directory exists, and create it if it doesn't
+if (!(Test-Path -Path $outputDirectory)) {
+    New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
+}
 
 # Collect installed software and their executables
 $SoftwareInventory = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |
