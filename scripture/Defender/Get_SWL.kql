@@ -1,0 +1,12 @@
+let ProcessData = 
+    DeviceProcessEvents
+    | summarize LatestExecutionTime = max(Timestamp) by FileName, DeviceId
+    | project FileName, DeviceId;
+
+let RegistryData = 
+    DeviceRegistryEvents
+    | where RegistryKey has "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
+    | project SoftwareName = tostring(RegistryValueName), DeviceId;
+
+ProcessData
+| join kind=inner (RegistryData) on DeviceId
