@@ -6,3 +6,14 @@ DeviceTvmSoftwareInventory
 | project DeviceName, SoftwareName, SoftwareVersion, SoftwareVendor
 | where not exists (ApprovedSoftware | where SoftwareName contains DeviceTvmSoftwareInventory.SoftwareName)
 | order by SoftwareName asc, SoftwareVersion desc
+
+
+
+
+-------------------------------------------------------------------------------------------------------------
+
+
+let ApprovedSoftware = _GetWatchlist('ApprovedSoftwareList');
+DeviceProcessEvents
+| where not(FileName contains_any (ApprovedSoftware))
+| project Timestamp, DeviceName, FileName, FolderPath
