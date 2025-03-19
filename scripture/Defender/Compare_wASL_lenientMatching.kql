@@ -1,0 +1,8 @@
+let ApprovedSoftware = Watchlist
+| where WatchlistName == "ApprovedSoftwareList"
+| project SoftwareName, SoftwareVersion, SoftwareVendor;
+
+DeviceTvmSoftwareInventory
+| project DeviceName, SoftwareName, SoftwareVersion, SoftwareVendor
+| where not exists (ApprovedSoftware | where SoftwareName contains DeviceTvmSoftwareInventory.SoftwareName)
+| order by SoftwareName asc, SoftwareVersion desc
