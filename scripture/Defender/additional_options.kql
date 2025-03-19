@@ -1,0 +1,4 @@
+let ApprovedSoftware = _GetWatchlist('ApprovedSoftwareList');
+DeviceTvmSoftwareInventory
+| where not(SoftwareName has_any (ApprovedSoftware))
+| project Timestamp, DeviceName, SoftwareName, FolderPath
