@@ -1,0 +1,8 @@
+let ApprovedSoftware = Watchlist
+| where WatchlistName == "ApprovedSoftwareList"
+| project SoftwareName, SoftwareVersion, SoftwareVendor;
+
+DeviceTvmSoftwareInventory
+| project DeviceName, SoftwareName, SoftwareVersion, SoftwareVendor
+| join kind=leftanti ApprovedSoftware on SoftwareName, SoftwareVersion, SoftwareVendor
+| order by SoftwareName asc, SoftwareVersion desc
