@@ -15,3 +15,16 @@ let ApprovedSoftware = _GetWatchlist('ApprovedSoftwareList')
 DeviceTvmSoftwareInventory
 | join kind=leftanti (ApprovedSoftware) on SoftwareName
 | project Timestamp, DeviceName, SoftwareName, FolderPath
+
+
+
+
+
+
+DeviceProcessEvents
+| project Timestamp, DeviceName, FileName, FolderPath, SHA256
+| join kind=inner (
+    DeviceTvmSoftwareInventory
+    | project DeviceName, SoftwareName, SoftwareVersion, SoftwareVendor, SHA256
+) on DeviceName, SHA256
+| project Timestamp, DeviceName, FileName, FolderPath, SoftwareName, SoftwareVersion, SoftwareVendor
