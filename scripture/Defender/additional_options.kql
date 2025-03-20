@@ -28,3 +28,17 @@ DeviceProcessEvents
     | project DeviceName, SoftwareName, SoftwareVersion, SoftwareVendor, SHA256
 ) on DeviceName, SHA256
 | project Timestamp, DeviceName, FileName, FolderPath, SoftwareName, SoftwareVersion, SoftwareVendor
+
+
+
+
+
+
+
+let ApprovedSoftware = materialize(WATCHLIST('ApprovedSoftwareList') | project ApprovedSoftware);
+DeviceProcessEvents
+| where ActionType == "ProcessCreated"
+| extend Executable = tolower(FileName)
+| join kind=leftanti (ApprovedSoftware) on $left.Executable == $right.ApprovedSoftware
+| project Timestamp, DeviceName, FileName, FolderPath, InitiatingProcessFileName, AccountName
+| order by Timestamp desc
