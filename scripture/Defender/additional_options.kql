@@ -1,25 +1,3 @@
-let ApprovedSoftware = _GetWatchlist('ApprovedSoftwareList');
-DeviceTvmSoftwareInventory
-| where not(SoftwareName has_any (ApprovedSoftware))
-| project Timestamp, DeviceName, SoftwareName, FolderPath
-
-
-
-
-
-
-
-
-let ApprovedSoftware = _GetWatchlist('ApprovedSoftwareList') 
-| project SoftwareName;
-DeviceTvmSoftwareInventory
-| join kind=leftanti (ApprovedSoftware) on SoftwareName
-| project Timestamp, DeviceName, SoftwareName, FolderPath
-
-
-
-
-
 
 DeviceProcessEvents
 | project Timestamp, DeviceName, FileName, FolderPath, SHA256
@@ -42,3 +20,60 @@ DeviceProcessEvents
 | join kind=leftanti (ApprovedSoftware) on $left.Executable == $right.ApprovedSoftware
 | project Timestamp, DeviceName, FileName, FolderPath, InitiatingProcessFileName, AccountName
 | order by Timestamp desc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let ApprovedSoftware = externaldata(AppName:string, AppVersion:string) 
+    [@"https://sentinelwatchlisturl.csv"]
+    with (format="csv", ignoreFirstRecord=true);
+DeviceInventory
+| extend AppName = tostring(parse_json(AdditionalProperties).displayName), 
+         AppVersion = tostring(parse_json(AdditionalProperties).version)
+| where isnotempty(AppName) and isnotempty(AppVersion)
+| join kind=leftanti (ApprovedSoftware) on AppName, AppVersion
+| project DeviceName, AppName, AppVersion, Timestamp
+| order by Timestamp desc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
