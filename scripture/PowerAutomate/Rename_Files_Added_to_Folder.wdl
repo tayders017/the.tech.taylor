@@ -8,3 +8,4 @@ if(
    ),
    triggerBody()?['{FilenameWithExtension}']
 )
+
