@@ -14,4 +14,5 @@ Table of contents
       * [Kali Linux Security Lab](https://github.com/tayders017/the.tech.taylor/tree/main/projects/Labs/KaliLinux_SecLab.md)
       * [Codecademy Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects/codecademy)
       * [Grafana Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects/Grafana)
+      * [OffSec Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects/OffSec)
       * [Additional Labs](https://github.com/tayders017/the.tech.taylor/tree/main/projects/Labs)
