@@ -12,6 +12,7 @@ Table of contents
       * [Caesar Cipher](https://github.com/tayders017/the.tech.taylor/blob/main/projects/Cryptography/CaesarCipher.py)
       * [Security Audits](https://github.com/tayders017/the.tech.taylor/tree/main/projects/SecurityAudits/BotiumToys)
       * [Kali Linux Security Lab](https://github.com/tayders017/the.tech.taylor/tree/main/projects/Labs/KaliLinux_SecLab.md)
+      * [AI Security Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects/AISecProjects)
       * [Codecademy Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects/codecademy)
       * [Grafana Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects/Grafana)
       * [HackTheBox Labs/Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects/HTB)
