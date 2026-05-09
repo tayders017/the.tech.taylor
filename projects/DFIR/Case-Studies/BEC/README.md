@@ -145,4 +145,4 @@ See:
 
 ## Disclaimer
 
-This investigation is a simulated lab scenario created for educational and portfolio purposes only. No real organizational data is included.
+This investigation is a simulated lab scenario created for educational and portfolio purposes only. No real organizational data is included (including timestamps). 
