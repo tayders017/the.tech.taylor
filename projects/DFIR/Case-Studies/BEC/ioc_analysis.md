@@ -27,9 +27,9 @@ The indicators below were collected from:
 
 | Domain | Purpose |
 |---|---|
-| microsoft.authsecure[.]com | Credential phishing |
-| office365-loginverify[.]com | Fabricated authentication portal |
-| securemail.msft.auth[.]net | Redirect infrastructure |
+| microsoft.authsecure[.com] | Credential phishing |
+| office365-loginverify[.com] | Fabricated authentication portal |
+| securemail.msft.auth[.net] | Redirect infrastructure |
 
 ---
 
