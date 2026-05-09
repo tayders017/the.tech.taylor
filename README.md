@@ -10,6 +10,7 @@ Table of contents
    * [Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects)
       * [Mac Keylogger](https://github.com/tayders017/the.tech.taylor/tree/main/projects/mac-keylogger)
       * [Caesar Cipher](https://github.com/tayders017/the.tech.taylor/blob/main/projects/Cryptography/CaesarCipher.py)
+      * [DFIR](https://github.com/tayders017/the.tech.taylor/tree/main/projects/DFIR)
       * [Security Audits](https://github.com/tayders017/the.tech.taylor/tree/main/projects/SecurityAudits/BotiumToys)
       * [Kali Linux Security Lab](https://github.com/tayders017/the.tech.taylor/tree/main/projects/Labs/KaliLinux_SecLab.md)
       * [AI Security Projects](https://github.com/tayders017/the.tech.taylor/tree/main/projects/AISecProjects)
