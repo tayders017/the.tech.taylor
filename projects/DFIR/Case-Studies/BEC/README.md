@@ -132,6 +132,9 @@ See:
 - Blocked malicious domains via Forcepoint ONE
 - Reviewed SaaS access posture and session controls
 
+See also:
+* [Containment & Recovery Actions](https://github.com/tayders017/the.tech.taylor/tree/main/projects/DFIR/Case-Studies/BEC/containment_recovery.md)
+
 ---
 
 ## Lessons Learned
