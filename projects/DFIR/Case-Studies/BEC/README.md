@@ -70,6 +70,9 @@ The attacker:
 9. Password reset + MFA enforcement
 10. Post-incident hardening recommendations
 
+See also:
+* [Timeline](https://github.com/tayders017/the.tech.taylor/tree/main/projects/DFIR/Case-Studies/BEC/timeline.md)
+
 ---
 
 ## Key Findings
