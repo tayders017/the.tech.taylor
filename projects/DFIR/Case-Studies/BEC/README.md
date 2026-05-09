@@ -104,9 +104,7 @@ See also:
 ## Indicators of Compromise
 
 See:
-- `/iocs/ip-addresses.md`
-- `/iocs/domains.md`
-- `/iocs/email-artifacts.md`
+* [IOC Analysis](https://github.com/tayders017/the.tech.taylor/tree/main/projects/DFIR/Case-Studies/BEC/ioc_analysis.md)
 
 ---
 
