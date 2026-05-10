@@ -1,0 +1,73 @@
+# DFIR Automation and Triage Toolkit
+
+## Overview
+
+This repository contains a collection of scripts and utilities developed to support digital forensics, incident response, and threat hunting activities across Windows and Linux environments.
+
+The toolkit focuses on:
+- Rapid evidence collection
+- IOC extraction
+- Log analysis
+- Windows triage automation
+- Browser artifact collection
+- Hash analysis
+- Threat hunting support
+
+---
+
+## Languages Used
+
+- Bash
+- PowerShell
+- Python
+
+---
+
+## Toolkit Categories
+
+| Category | Description |
+|---|---|
+| Evidence Collection | Rapid host triage and artifact acquisition |
+| Log Parsing | Windows/Linux log analysis utilities |
+| IOC Extraction | Automated IOC parsing and enrichment |
+| Hash Analysis | File hashing and comparison utilities |
+| Browser Artifacts | Browser history and credential artifact parsing |
+| Windows Triage | Endpoint triage automation scripts |
+
+---
+
+## Example Tools
+
+| Tool | Purpose |
+|---|---|
+| collect_triage.ps1 | Windows incident response triage collection |
+| parse_evtx.py | EVTX log parsing and filtering |
+| extract_iocs.py | IOC extraction from text/logs |
+| compare_hashes.py | Hash comparison against known bad hashes |
+| chrome_history_parser.py | Browser artifact extraction |
+| memory_triage.sh | Linux memory/process triage |
+
+---
+
+## Example Use Cases
+
+- Ransomware investigations
+- Business Email Compromise investigations
+- Malware triage
+- Threat hunting operations
+- Endpoint compromise analysis
+- Insider threat investigations
+
+---
+
+## Sample Output
+
+See:
+- `/sample-output/`
+- `/docs/`
+
+---
+
+## Disclaimer
+
+All scripts are intended for authorized security testing, incident response, and educational purposes only.
