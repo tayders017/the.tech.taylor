@@ -26,7 +26,7 @@
 	The full file path to the .evtx file to be analyzed.
 
 .EXAMPLE
-	.\evi-collect-triage-enhanced.ps1
+	.\Evi-Collect-Triage.ps1
 #>
 
 # 1. System Information & Environment
