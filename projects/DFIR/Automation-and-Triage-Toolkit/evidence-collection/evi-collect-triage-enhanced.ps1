@@ -1,18 +1,33 @@
-# ==============================================================================
-# INITIAL EVIDENCE COLLECTION SCRIPT / INCIDENT RESPONSE TRIAGE SCRIPT
-# ==============================================================================
-# PURPOSE: Rapid collection of volatile data and persistence mechanisms.
-# REQUIREMENTS: Run with Administrator privileges.
-# ==============================================================================
-# TABLE OF CONTENTS
-#    1. System Identification & Environment ........ [Metadata & OS Info]
-#    2. Process & Execution Analysis .......... [Running Tasks & CMD Lines]
-#    3. Network & Connectivity ................ [Network State, Connections & DNS Cache]
-#    4. Persistence Mechanisms .................. [Startup & Scheduled Tasks]
-#    5. User & Session Activity ...... [Users & Active Logons]
-#    6. Service Inventory ............ [Background Services]
-#    7. Recent File Activity ......... [Recent Changes (Last 24 hours) & Temp Files]
-# ==============================================================================
+<#
+.TITLE
+  INITIAL EVIDENCE COLLECTION SCRIPT / INCIDENT RESPONSE TRIAGE SCRIPT
+
+.SYNOPSIS
+  Rapid collection of volatile data and persistence mechanisms.
+
+.TABLE OF CONTENTS
+	1. System Identification & Environment ........ [Metadata & OS Info]
+	2. Process & Execution Analysis .......... [Running Tasks & CMD Lines]
+	3. Network & Connectivity ................ [Network State, Connections & DNS Cache]
+	4. Persistence Mechanisms .................. [Startup & Scheduled Tasks]
+	5. User & Session Activity ...... [Users & Active Logons]
+	6. Service Inventory ............ [Background Services]
+	7. Recent File Activity ......... [Recent Changes (Last 24 hours) & Temp Files]
+	
+.REQUIREMENTS
+	Run with Administrator privileges.
+
+.DESCRIPTION
+  This script targets Event ID 4625 (An account failed to log on). 
+  It uses the highly efficient -FilterHashtable method to reduce memory consumption.
+  The script extracts specific indexed properties for Username and Source IP.
+
+.PARAMETER LogPath
+  The full file path to the .evtx file to be analyzed.
+
+.EXAMPLE
+	.\evi-collect-triage-enhanced.ps1
+#>
 
 # 1. System Information & Environment
 Write-Host "Collecting System Info..."
