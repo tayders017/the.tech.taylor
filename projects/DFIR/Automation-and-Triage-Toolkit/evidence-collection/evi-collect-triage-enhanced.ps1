@@ -39,7 +39,7 @@ Write-Host "Collecting Processes..."
 Get-CimInstance Win32_Process | Select-Object Name, ProcessId, ParentProcessId, CommandLine, ExecutablePath | Export-Csv processes_detailed.csv
 
 # 3. Network & Connectivity
-Write-Host "Collecting Network State..."
+Write-Host "Collecting Network State and Connectivity..."
 # netstat is classic, but Get-NetTCPConnection provides more PowerShell-friendly output
 Get-NetTCPConnection | Select-Object LocalAddress, LocalPort, RemoteAddress, RemotePort, State, OwningProcess | Export-Csv network_connections.csv
 Get-DnsClientCache | Export-Csv dns_cache.csv
