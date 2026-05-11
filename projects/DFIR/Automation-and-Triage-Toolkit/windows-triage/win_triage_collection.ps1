@@ -39,49 +39,85 @@
     ===========================================================================
 #>
 
-# --- Configuration & Environment Setup ---
+param (
+    [string]$ExportBaseDir = "C:\"
+)
+
+# 1. PRE-FLIGHT LOGIC
+Write-Host "--- Performing Pre-Flight Environment Checks ---" -ForegroundColor Yellow
+
+$IsAdmin = ([Security.Principal.WindowsIdentity]::GetCurrent().Groups -contains "S-1-5-32-544")
+$FreeSpace = (Get-PSDrive $ExportBaseDir.Substring(0,1)).Free / 1MB
+$DefenderAvailable = Get-Command Get-MpThreatDetection -ErrorAction SilentlyContinue
+
+$AbortScript = $false
+
+# Check Admin Rights (Critical for Event Logs)
+if (-not $IsAdmin) {
+    Write-Host "[!] ERROR: Script not running as Administrator. Collection aborted." -ForegroundColor Red
+    $AbortScript = $true
+}
+
+# Check Disk Space (Safety first)
+if ($FreeSpace -lt 100) {
+    Write-Host "[!] ERROR: Insufficient disk space ($([math]::Round($FreeSpace,2)) MB). 100MB required." -ForegroundColor Red
+    $AbortScript = $true
+}
+
+# Exit if critical checks fail
+if ($AbortScript) { exit }
+
+Write-Host "[✓] Pre-flight checks passed. Initializing collection..." -ForegroundColor Green
+
+# 2. CONFIGURATION AND ENVIRONMENT SETUP
 $ComputerName = $env:COMPUTERNAME
 $Timestamp = Get-Date -Format "yyyyMMdd_HHmm"
-$ExportPath = "C:\IR_Triage_$Timestamp"
-New-Item -Path $ExportPath -ItemType Directory -Force | Out-Null
+$ExportPath = Join-Path -Path $ExportBaseDir -ChildPath "IR_Triage_$($ComputerName)_$Timestamp"
 
+New-Item -Path $ExportPath -ItemType Directory -Force | Out-Null
 Write-Host "--- Starting Forensic Collection on $ComputerName ---" -ForegroundColor Cyan
 
-# 1. System Metadata (Crucial for timelines)
+
+# 3. Collection Modules
+# 3a. System Metadata
 Write-Host "[+] Collecting System Metadata..."
-$Metadata = [PSCustomObject]@{
+[PSCustomObject]@{
     Hostname   = $ComputerName
     User       = [Security.Principal.WindowsIdentity]::GetCurrent().Name
     Collection = Get-Date
-    OS_Version = (Get-WmiObject Win32_OperatingSystem).Caption
-}
-$Metadata | Export-Csv -Path "$ExportPath\Collection_Metadata.csv" -NoTypeInformation
+    OS_Version = (Get-CimInstance Win32_OperatingSystem).Caption
+} | Export-Csv -Path "$ExportPath\Collection_Metadata.csv" -NoTypeInformation
 
-# 2. PowerShell Operational Logs (Search for script blocks/obfuscation)
+# 3b. PowerShell Logs
 Write-Host "[+] Collecting PowerShell Logs..."
 try {
-    Get-WinEvent -LogName "Microsoft-Windows-PowerShell/Operational" -ErrorAction Stop | 
+    Get-WinEvent -LogName "Microsoft-Windows-PowerShell/Operational" -MaxEvents 5000 -ErrorAction Stop | 
     Select-Object TimeCreated, Id, LevelDisplayName, Message | 
     Export-Csv -Path "$ExportPath\PowerShell_Logs.csv" -NoTypeInformation
 } catch {
     "Could not access PS Logs: $($_.Exception.Message)" | Out-File "$ExportPath\Errors.log" -Append
 }
 
-# 3. Windows Defender Detections
-Write-Host "[+] Collecting Defender Alerts..."
-if (Get-Command Get-MpThreatDetection -ErrorAction SilentlyContinue) {
+# 3c. Windows Defender Detections
+if ($DefenderAvailable) {
+    Write-Host "[+] Collecting Defender Alerts..."
     Get-MpThreatDetection | Export-Csv -Path "$ExportPath\Defender_Alerts.csv" -NoTypeInformation
+} else {
+    Write-Host "[!] Defender module not found. Skipping..." -ForegroundColor Gray
 }
 
-# 4. Network Artifacts (ARP & Active Connections)
+# 3d. Network Artifacts
 Write-Host "[+] Collecting Network Artifacts..."
 arp -a | Out-File "$ExportPath\ARP_Cache.txt"
 Get-NetTCPConnection | Select-Object LocalAddress, LocalPort, RemoteAddress, RemotePort, State, OwningProcess | 
 Export-Csv -Path "$ExportPath\Network_Connections.csv" -NoTypeInformation
 
-# 5. Volatile Process List (Identifying suspicious hidden processes)
+# 3e. Volatile Process List
 Write-Host "[+] Collecting Process List..."
 Get-Process | Select-Object Id, ProcessName, StartTime, Path, Company | 
 Export-Csv -Path "$ExportPath\Process_List.csv" -NoTypeInformation
+
+# 4. WRAP UP
+Write-Host "`n--- Collection Complete! Data saved to: $ExportPath ---" -ForegroundColor Green
 
 Write-Host "--- Collection Complete! Data saved to: $ExportPath ---" -ForegroundColor Green
