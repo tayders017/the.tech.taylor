@@ -2,9 +2,7 @@
 .SYNOPSIS
 	Rapid collection of volatile data and persistence mechanisms.
 	TITLE: INITIAL EVIDENCE COLLECTION SCRIPT / INCIDENT RESPONSE TRIAGE SCRIPT
-	
-.REQUIREMENTS
-	Run with Administrator privileges.
+	REQUIREMENTS: Run with Administrator privileges.
 
 .DESCRIPTION
 	This script targets Event ID 4625 (An account failed to log on). 
