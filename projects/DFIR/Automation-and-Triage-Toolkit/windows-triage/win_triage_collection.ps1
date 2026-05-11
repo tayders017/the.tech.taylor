@@ -4,28 +4,28 @@
 	TITLE: WINDOWS TRIAGE COLLECTION SCRIPT
 
 .DESCRIPTION
-  This script automates the collection of critical security artifacts including: PowerShell operational logs, Windows Defender threat history, ARP tables, active network connections, and running processes. 
-  It outputs all data into a timestamped directory for forensic preservation.
-	TABLE OF CONTENTS
-		FIRST--->Configuration & Environment Setup
-    1. System Metadata (Crucial for timelines)
-		2. PowerShell Operational Logs (Search for script blocks/obfuscation)
-		3. Windows Defender Detections
-		4. Network Artifacts (ARP & Active Connections)
-		5. Volatile Process List (Identifying suspicious hidden processes)
+	This script automates the collection of critical security artifacts including: PowerShell operational logs, Windows Defender threat history, ARP tables, active network connections, and running processes. 
+	It outputs all data into a timestamped directory for forensic preservation.
+		TABLE OF CONTENTS
+			FIRST--->Configuration & Environment Setup
+			1. System Metadata (Crucial for timelines)
+			2. PowerShell Operational Logs (Search for script blocks/obfuscation)
+			3. Windows Defender Detections
+			4. Network Artifacts (ARP & Active Connections)
+			5. Volatile Process List (Identifying suspicious hidden processes)
 
 .PARAMETER ExportBaseDir
-  The root directory where the triage folder will be created. Defaults to C:\.
+	The root directory where the triage folder will be created. Defaults to C:\.
 
 .PARAMETER IncludeNetwork
-  A switch to determine if active TCP connections and ARP tables should be gathered.
+	A switch to determine if active TCP connections and ARP tables should be gathered.
 
 .EXAMPLE
-  .\Get-TriageData.ps1 -ExportBaseDir "D:\Forensics"
-  >Collects data and saves it to a timestamped folder on the D:\ drive.
+	.\Get-TriageData.ps1 -ExportBaseDir "D:\Forensics"
+	>Collects data and saves it to a timestamped folder on the D:\ drive.
 
 .NOTES
-    ===========================================================================
+	===========================================================================
     ENVIRONMENT & CONFIGURATION NOTES:
     ===========================================================================
     1. PRIVILEGES: Must be executed within an Elevated (Run as Admin) session.
