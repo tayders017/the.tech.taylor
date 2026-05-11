@@ -45,10 +45,8 @@ The toolkit focuses on:
 | parse_evtx.py | EVTX log parsing and filtering, basic script, parses failed log on events |
 | parse_evtx_enhanced.py | EVTX log parsing and filtering |
 | parse_evtx_enhanced.ps1 | EVTX log parsing and filtering |
-| extract_iocs.py | IOC extraction from text/logs |
-| compare_hashes.py | Hash comparison against known bad hashes |
-| chrome_history_parser.py | Browser artifact extraction |
-| memory_triage.sh | Linux memory/process triage |
+| win_triage_collector.ps1 | Endpoint triage automation scripts, collect Defender logs |
+
 
 ---
 
