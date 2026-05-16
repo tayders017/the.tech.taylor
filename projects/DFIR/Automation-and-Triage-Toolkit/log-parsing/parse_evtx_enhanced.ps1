@@ -1,7 +1,4 @@
 <#
-.TITLE
-	PARSING FAILED LOGON SECURITY EVENT SCRIPT
-
 .SYNOPSIS
 	Parses an offline Windows Security Event Log (.evtx) for Failed Logon attempts.
 
