@@ -2,17 +2,16 @@
 .SYNOPSIS
 	Parses an offline Windows Security Event Log (.evtx) for Failed Logon attempts.
 
-.TABLE OF CONTENTS
+.DESCRIPTION
+	This script targets Event ID 4625 (An account failed to log on). 
+	Uses the highly efficient -FilterHashtable method to reduce memory consumption.
+	The script extracts specific indexed properties for Username and Source IP.
+	TABLE OF CONTENTS:
 	1. Configuration & Path Setup
 	2. Validation
 	3. Define Filter Criteria
 	4. Execution & Data Extraction
 	5. Summary Output
-
-.DESCRIPTION
-	This script targets Event ID 4625 (An account failed to log on). 
-	Uses the highly efficient -FilterHashtable method to reduce memory consumption.
-	The script extracts specific indexed properties for Username and Source IP.
 
 .PARAMETER LogPath
 	The full file path to the .evtx file to be analyzed.
