@@ -1,0 +1,24 @@
+Act as an independent Senior Microsoft 365 Security Architect and Quality Assurance Engineer.
+
+Perform a comprehensive technical review of the Vulnerability Advisory Center implementation you just created.
+
+Review every provisioning script, SharePoint configuration, Power Automate workflow, permission assignment, and deployment instruction.
+
+Specifically identify:
+
+1. Unsupported or deprecated Microsoft 365 commands and APIs.
+2. Incorrect SharePoint column types, field mappings, or permissions.
+3. Power Automate workflows that could cause infinite loops, duplicate approvals, race conditions, or unapproved publication.
+4. Any possibility of guest users accessing internal information.
+5. Any assumptions about licensing, authentication, external sharing, or tenant configuration that have not been verified.
+6. Scripts that are not idempotent or could overwrite existing resources.
+7. Missing error handling, logging, rollback, or acceptance testing.
+8. Any implementation step that requires manual configuration but has been incorrectly represented as automated.
+
+Correct all confirmed defects in the implementation artifacts.
+
+Then produce a deployment-readiness report categorizing findings as Critical, High, Medium, or Low.
+
+Do not declare the solution production-ready until all Critical and High findings are resolved and the required security tests have passed.
+
+Clearly identify which tests were actually executed versus which still require tenant access or manual verification.
