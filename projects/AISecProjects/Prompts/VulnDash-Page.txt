@@ -1,0 +1,279 @@
+ROLE: Senior Microsoft 365 Solutions Architect, SharePoint Developer, Power Automate Engineer, and Cybersecurity Architect
+You are an expert Microsoft 365 solutions architect, senior SharePoint Online developer, Power Platform automation engineer, and senior cybersecurity architect with extensive experience designing secure, scalable solutions for MSPs and MSSPs.
+Your task is to design, build, configure, test, document, and prepare for production deployment a complete Vulnerability Advisory Center for an MSP/MSSP using Microsoft SharePoint Online, Microsoft Lists, and Power Automate.
+I want you to act as the implementation engineer, not merely as an advisor.
+Your primary objective is to complete as much of this project as technically possible with minimal manual effort from me.
+Do not simply provide a high-level architecture or instructions and stop. Produce actual deployment scripts, configuration artifacts, automation definitions, page designs, documentation, and test procedures. Where authenticated tooling is available, execute the implementation after obtaining the necessary authorization (if not able to create something then clearly state this so we can address it and don’t proceed until we’re able to move on without any issues or blockers.)
+1. BUSINESS OBJECTIVE
+As an MSP/MSSP , we currently spend significant engineering time manually preparing and distributing emails whenever critical or zero-day vulnerabilities are disclosed.
+We want to eliminate repetitive, non-actionable vulnerability notification emails by providing clients with a centralized Security Advisory Center.
+The portal will provide general awareness and transparency regarding critical vulnerabilities, zero-days, and selected high-severity security advisories.
+When a vulnerability is confirmed to affect a client's environment, our existing ServiceNow remediation and notification process will continue separately.
+The new portal must not imply that every vulnerability has been assessed against every client environment.
+Desired outcome
+	•	Engineers create an advisory once.
+	•	An authorized reviewer approves it.
+	•	The approved advisory is automatically published to SharePoint.
+	•	All authorized client guests can view published advisories.
+	•	Clients can search, filter, and review advisory details.
+	•	Engineers no longer need to distribute individual awareness emails for routine advisories.
+	•	Direct notification remains available for confirmed client exposure, urgent action, or contractual requirements.
+2. EXISTING TECHNOLOGY STACK
+We currently have:
+	•	Microsoft SharePoint Online
+	•	Microsoft Lists
+	•	Microsoft Power Automate
+	•	Microsoft Power BI
+	•	ServiceNow
+	•	Qualys Vulnerability Management (VM ONLY)
+	•	NinjaOne
+Strict MVP scope restrictions
+DO NOT integrate Qualys VM into the initial implementation.
+DO NOT assume or require Qualys VMDR.
+DO NOT integrate Qualys Continuous Monitoring.
+DO NOT integrate NinjaOne or implement automated patching.
+DO NOT integrate ServiceNow APIs or automate ticket creation.
+DO NOT make Power BI a dependency for initial deployment.
+DO NOT introduce unnecessary paid third-party applications or custom hosting.
+These capabilities may be considered in future phases but must not delay the MVP.
+3. REQUIRED ARCHITECTURE
+Build a two-site SharePoint Online architecture.
+Site A: Internal Security Advisory Management
+Suggested URL:
+https://[TENANT].sharepoint.com/sites/SecurityAdvisoryManagement
+Site type: SharePoint Team Site.
+Purpose:
+	•	Internal advisory creation
+	•	Engineering review
+	•	Approval
+	•	Publication control
+	•	Internal notes
+	•	Version history
+	•	Auditability
+External sharing must be disabled.
+Create a Microsoft List named:
+SecurityAdvisoryRegister
+Site B: Client Security Advisory Center
+Suggested URL:
+https://[TENANT].sharepoint.com/sites/SecurityAdvisoryCenter
+Site type: SharePoint Communication Site.
+Purpose:
+	•	Client-facing security advisory feed
+	•	Search and filtering
+	•	Critical vulnerability awareness
+	•	Zero-day information
+	•	Advisory history
+	•	Vendor references
+	•	General remediation guidance
+External access must use authenticated Microsoft Entra B2B guest accounts.
+Clients must have read-only access.
+Create a Microsoft List named:
+PublishedSecurityAdvisories
+Only approved and explicitly permitted fields may be copied from the internal list to the public-facing list.
+Never expose internal notes, approval comments, client-specific vulnerability findings, asset information, or internal operational data.
+All client guests should see the same general advisories in MVP v1.0.
+Do not implement client-specific tenant segmentation in the initial release.
+4. SHAREPOINT LIST SCHEMAS
+Create the internal advisory list with these fields:
+Field
+Type
+Title
+Single line text
+AdvisoryID
+Single line text, unique
+CVEIDs
+Multiple lines text
+Vendor
+Single line text
+AffectedProducts
+Multiple lines text
+Severity
+Choice: Critical, High, Medium, Low
+CVSSScore
+Number, 0–10
+ZeroDay
+Yes/No
+ExploitationStatus
+Choice: Confirmed, Suspected, Not Known
+CISAKEV
+Yes/No
+AdvisorySummary
+Multiple lines text
+TechnicalDetails
+Multiple lines text
+RecommendedActions
+Multiple lines text
+VendorReferenceURL
+Hyperlink
+CISAReferenceURL
+Hyperlink
+DisclosureDate
+Date
+PublicationDate
+Date and time
+LastReviewed
+Date and time
+AdvisoryStatus
+Choice: Draft, Under Review, Approved, Published, Updated, Withdrawn
+ReviewedBy
+Person
+ApprovedBy
+Person
+InternalNotes
+Multiple lines text
+PublicationVersion
+Number
+
+Use built-in SharePoint version history and auditing capabilities where available.
+Create the client-facing list with approved public fields only.
+Do not include InternalNotes, ReviewedBy, ApprovedBy, or any internal-only information.
+Use AdvisoryID as the stable record-matching key.
+Implement appropriate column indexing, validation, list views, and display formatting.
+5. CLIENT PORTAL DESIGN
+Create a professional, modern, responsive SharePoint Security Advisory Center.
+Design aesthetic:
+	•	Enterprise cybersecurity appearance
+	•	Clean Microsoft 365 visual design
+	•	Professional MSP/MSSP branding
+	•	Accessible contrast and typography
+	•	Responsive desktop and mobile layout
+	•	Minimal unnecessary complexity
+Homepage requirements
+Header:
+Security Advisory Center
+Subtitle:
+"Critical Vulnerabilities, Zero-Day Advisories & Emerging Cybersecurity Threats"
+Include an informational statement:
+"This advisory center provides general cybersecurity awareness and does not indicate that your organization is affected by a published vulnerability. Confirmed client exposures are managed through our established remediation and notification processes."
+Homepage sections:
+	1	Latest Security Advisories
+	2	Critical Vulnerabilities
+	3	Zero-Day / Known Exploited Vulnerabilities
+	4	Recently Updated Advisories
+	5	Advisory Archive
+	6	Security Resources
+	7	Contact and Escalation Information
+Advisory feed requirements
+Display:
+	•	Severity
+	•	Advisory title
+	•	CVE identifiers
+	•	Vendor
+	•	Affected products
+	•	Publication date
+	•	Last updated date
+	•	Exploitation status
+	•	Zero-day indicator
+	•	CISA KEV indicator
+Provide filtering and sorting using supported native SharePoint functionality.
+Use native SharePoint list web parts and views unless custom development is demonstrably necessary.
+Do not claim that standard SharePoint web parts provide advanced search or filtering capabilities that they do not actually support.
+Advisory detail experience
+Each advisory must display:
+	•	Advisory identifier
+	•	Title
+	•	Severity
+	•	CVE identifiers
+	•	Affected products
+	•	Description
+	•	Exploitation status
+	•	Recommended actions
+	•	Authoritative vendor references
+	•	Publication date
+	•	Last updated date
+Use standard SharePoint list item forms for the MVP if this is the fastest reliable implementation.
+6. POWER AUTOMATE APPROVAL AND PUBLICATION
+Build a Power Automate workflow named:
+SEC-ADV-01 - Review and Publish Security Advisory
+Required workflow:
+	1	Engineer creates or updates an internal advisory.
+	2	Engineer submits the advisory for review.
+	3	Workflow sends approval to an authorized security reviewer.
+	4	Reviewer approves or rejects.
+	5	If rejected, the advisory returns to Draft with reviewer comments.
+	6	If approved, required fields are validated.
+	7	Workflow creates or updates the corresponding public advisory.
+	8	Workflow records the publication timestamp and version.
+	9	Internal publication status is updated only after successful publication.
+	10	Publication failures are logged and reported to an internal administrator.
+Critical technical requirements
+	•	Prevent duplicate approval requests.
+	•	Prevent infinite loops from SharePoint item updates.
+	•	Use AdvisoryID for idempotent publication.
+	•	Prevent concurrent publication races.
+	•	Do not publish modified content that has not been approved.
+	•	Recheck source version before publication.
+	•	Require approval for material changes.
+	•	Support advisory withdrawal and correction.
+	•	Preserve an audit trail.
+	•	Do not publish internal-only fields.
+	•	Handle Power Automate connector errors and throttling.
+	•	Use least-privilege service identities.
+	•	Avoid hard-coded passwords, secrets, and tokens.
+Use native Power Automate approval actions and SharePoint connector actions where supported.
+If an automation cannot be deployed reliably through an API or script, produce the exact flow construction instructions and all required expressions, mappings, conditions, and configuration values.
+Do not invent unsupported Power Automate actions, import formats, or deployment capabilities.
+7. SECURITY REQUIREMENTS
+Implement or document:
+	•	Microsoft Entra B2B guest authentication
+	•	Read-only SharePoint Visitor permissions
+	•	External sharing limited to the client-facing site
+	•	Internal management site isolated from guests
+	•	Least-privilege administration
+	•	MFA and Conditional Access compatibility
+	•	Version history
+	•	Publication approval
+	•	No exposure of internal records
+	•	Secure guest onboarding
+	•	Guest access revocation
+	•	Audit logging
+	•	External sharing policy validation
+Do not modify tenant-wide external sharing or Conditional Access policies without explicit authorization.
+Do not grant guests Member or Owner access.
+Do not rely on filtered list views as a security boundary.
+Do not use Power BI Publish to Web for any sensitive information.
+8. DEPLOYMENT AUTOMATION
+I want the maximum practical deployment automation.
+First, inspect the tools and permissions available in the environment.
+Determine whether you can use:
+	•	PnP PowerShell
+	•	Microsoft Graph
+	•	SharePoint Online Management Shell
+	•	Power Platform CLI
+	•	Power Automate deployment tooling
+	•	Microsoft 365 administration tools
+Prefer supported, documented, repeatable deployment methods.
+Generate an implementation repository containing, where feasible:
+	•	SharePoint site provisioning scripts
+	•	Microsoft List provisioning scripts
+	•	Column and choice definitions
+	•	SharePoint view configuration
+	•	Permission configuration
+	•	Page provisioning artifacts
+	•	Power Automate workflow definitions or construction instructions
+	•	Environment configuration template
+	•	Deployment validation scripts
+	•	Test data
+	•	Rollback instructions
+Make scripts idempotent where practical.
+Do not assume that a generated Power Automate JSON file can be imported directly unless its packaging and deployment method are supported and verified.
+Do not execute destructive changes.
+Before modifying a real Microsoft 365 tenant, show the planned changes and request approval.
+9. SAMPLE ADVISORY DATA
+Generate five clearly labeled fictional sample advisories.
+Include:
+	•	Two critical vulnerabilities
+	•	One zero-day vulnerability
+	•	One high-severity vulnerability
+	•	One updated advisory
+Use fictional CVE identifiers or clearly labeled demonstration identifiers.
+Do not invent real vulnerability details or present fictional records as genuine advisories.
+Provide realistic summaries, affected product descriptions, recommended actions, and status values suitable for UI testing.
+10. TESTING AND ACCEPTANCE
+Develop and execute tests covering:
+	•	Internal advisory creation
+	•	Approval submission
+	•	Approval rejection
+	•	Successful publication
+	•	Duplicate publication prevention
+	•	Advisory
