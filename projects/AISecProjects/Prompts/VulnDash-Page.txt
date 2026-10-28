@@ -277,3 +277,5 @@ Develop and execute tests covering:
 	•	Successful publication
 	•	Duplicate publication prevention
 	•	Advisory
+
+Do not spend the first several hours building a sophisticated custom dashboard; The MVP should be a SharePoint Communication Site with a published Microsoft List and an approval workflow. That is the fastest, most maintainable solution for our main objective, and all of the details listed above explicitly keeps it focused on that outcome.
