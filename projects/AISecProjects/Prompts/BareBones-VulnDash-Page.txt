@@ -675,3 +675,25 @@ Do not add Power BI, Power Automate, additional SharePoint sites, or additional 
 Proceed with implementation immediately; once you have read all details and understand all requirements, objectives, goals; if you have any questions please pause and ask me a question so I can provide clarity.
 
 Do not expand the scope beyond these requirements.
+
+
+
+We do not currently have an Entra app registration for PnP PowerShell, and I do not want to create one for this MVP.
+
+Do not block development on PnP authentication, Microsoft Graph API access, or tenant administrator permissions.
+
+Switch to a browser-based, native SharePoint implementation.
+
+Help me build the complete Security Advisory Center directly in my existing development SharePoint site using the SharePoint and Microsoft Lists interfaces.
+
+Use one Site Page and one Microsoft List named SecurityAdvisories.
+
+Provide exact, sequential instructions for creating the list, columns, views, severity formatting, and page layout. Generate any copy-and-paste configuration JSON needed.
+
+Keep the solution simple and portable so we can recreate it later in another SharePoint site within the same tenant.
+
+Do not ask for the production site URL yet.
+
+Do not create an Entra app registration, Power Automate flow, Power BI report, or additional infrastructure.
+
+Start with the first concrete action I need to take in the SharePoint browser and guide me through implementation.
