@@ -1,0 +1,677 @@
+# MASTER IMPLEMENTATION PROMPT
+## MSP/MSSP Security Vulnerability Advisory Center — SharePoint MVP
+
+Read all details before starting to make sure you understand all requirements, objectives, and goals. Never guess, make up data, enter false information, or skip over anything if you do not know something; if something does't make sense, doesn't align, or if you have any questions please pause and ask me questions so I can provide clarity.
+
+### YOUR ROLE
+
+You are acting as a Senior Microsoft 365 Solutions Architect, SharePoint Online Engineer, Cybersecurity Architect, and Deployment Automation Specialist.
+
+Your responsibility is to design, build, configure, test, and document a lightweight, professional, client-facing Security Vulnerability Advisory Center using existing Microsoft SharePoint Online functionality.
+
+This is an implementation assignment, not a theoretical architecture exercise.
+
+**Your goal is to complete as much of the actual implementation as possible, with minimal manual effort from me.**
+
+Use available authenticated tools and supported deployment methods where authorized. If direct deployment is unavailable, generate reusable scripts and exact implementation instructions.
+
+Prioritize:
+
+1. Fastest possible implementation.
+2. Secure access and protection of internal information.
+3. No additional software, hosting, or licensing costs where existing Microsoft 365 entitlements suffice.
+4. Minimal ongoing maintenance.
+5. Professional client-facing presentation.
+6. Portability between SharePoint sites.
+7. Native Microsoft 365 functionality over custom development.
+
+Avoid overengineering.
+
+---
+
+# 1. BUSINESS OBJECTIVE
+
+We are an MSP/MSSP that provides cybersecurity services to multiple clients.
+
+Our security engineers currently spend unnecessary time manually emailing general critical vulnerability and zero-day security advisories to clients.
+
+We want to create a centralized Security Advisory Center where authorized clients can view published vulnerability advisories.
+
+The purpose is to reduce repetitive awareness emails while maintaining transparency.
+
+The portal is for **general cybersecurity advisories only**.
+
+It must not suggest that a vulnerability has been assessed against every client environment.
+
+Confirmed client-specific exposure, remediation tickets, urgent escalation, and contractual communications will continue through our existing ServiceNow and operational processes.
+
+The solution must be simple enough for cybersecurity engineers to maintain without developer assistance.
+
+---
+
+# 2. REQUIRED ARCHITECTURE
+
+Build the following:
+
+**ONE SharePoint Site Page**
+
+Page title:
+
+`Security Advisory Center`
+
+Suggested page filename:
+
+`Security-Advisory-Center.aspx`
+
+**ONE Microsoft List**
+
+List name:
+
+`SecurityAdvisories`
+
+The page must display the Microsoft List through a native SharePoint List web part.
+
+Both components will initially be created inside an **existing internal development SharePoint site**.
+
+They will later be transferred or recreated within a **different existing SharePoint site that supports authenticated external client guests**.
+
+Both sites belong to the same Microsoft 365 tenant.
+
+### Critical architectural requirements
+
+- Do not create a new SharePoint site.
+- Do not create a second Microsoft List.
+- Do not build a separate application.
+- Do not create a separate database.
+- Do not require Power Automate.
+- Do not require Power BI.
+- Do not require Power Apps.
+- Do not require SPFx development.
+- Do not require Azure infrastructure.
+- Do not introduce premium connectors.
+- Do not introduce paid third-party tools.
+- Do not integrate Qualys, NinjaOne, or ServiceNow.
+- Do not implement automated patching or remediation.
+- Do not implement automated CVE ingestion.
+- Do not implement automated approval workflows.
+
+The MVP consists of:
+
+**One Site Page + One Microsoft List + Manual Publishing.**
+
+---
+
+# 3. DEVELOPMENT AND PRODUCTION LOCATIONS
+
+The solution must support two configurable SharePoint locations.
+
+Development site:
+
+`[DEVELOPMENT_SHAREPOINT_SITE_URL]`
+
+Production destination site:
+
+`[PRODUCTION_SHAREPOINT_SITE_URL]`
+
+Both are within the same Microsoft 365 tenant.
+
+### Development requirements
+
+Build the page and list in the development site.
+
+Use internal-only access during development.
+
+Do not enable external sharing or invite guests in the development site.
+
+Do not modify existing site-wide permissions.
+
+Do not interfere with other SharePoint content.
+
+### Production requirements
+
+The final destination will be an existing SharePoint site that already supports authenticated client guest access.
+
+Do not create another site.
+
+Do not assume that guests automatically have access to the advisory page or list.
+
+Do not assume that all existing guests should receive access.
+
+Preserve the destination site's current sharing and security settings.
+
+Before deployment, inspect and document any permissions that would allow guests to access unrelated site content.
+
+Do not grant broad site access when page-level and list-level access can be used safely under existing site policies.
+
+Do not use filtered list views as a security boundary.
+
+---
+
+# 4. PORTABILITY AND MIGRATION REQUIREMENTS
+
+The solution must be designed so it can be recreated in the destination SharePoint site with minimal effort.
+
+### Required deliverables
+
+Create reusable deployment scripts or configuration artifacts for:
+
+1. Microsoft List creation.
+2. List column configuration.
+3. List views.
+4. Column formatting.
+5. Versioning settings.
+6. SharePoint Site Page creation.
+7. Page sections and web parts.
+8. List web part configuration.
+9. Navigation links, where authorized.
+10. Deployment validation.
+
+### Important requirements
+
+- Use configurable site URLs.
+- Avoid hard-coded development site identifiers.
+- Avoid hard-coded list GUIDs.
+- Avoid development-specific links.
+- Resolve the destination list dynamically.
+- Ensure the List web part points to the correct destination list.
+- Do not overwrite existing pages or lists.
+- Do not change existing permissions without explicit approval.
+- Do not automatically copy demonstration advisories into production.
+- Preserve existing production site navigation unless authorized to modify it.
+- Make provisioning scripts idempotent where practical.
+- Provide a rollback procedure.
+
+Do not assume SharePoint provides a one-click cross-site migration for modern Site Pages and their associated List web parts.
+
+Use supported PnP PowerShell or other documented Microsoft 365 provisioning methods.
+
+If a page component cannot be reliably provisioned automatically, provide exact manual steps.
+
+### Migration goal
+
+Once the solution is complete in development, I should be able to supply the destination SharePoint URL and have Claude deploy or recreate the same page and list with minimal manual work.
+
+---
+
+# 5. MICROSOFT LIST CONFIGURATION
+
+Create a Microsoft List named:
+
+`SecurityAdvisories`
+
+This is a **published-only advisory list**.
+
+Every record must be appropriate for client visibility immediately after saving.
+
+There must be no internal draft records, confidential notes, client-specific asset information, or sensitive investigation findings.
+
+### Required columns
+
+| Column | Type | Required |
+|---|---|---|
+| Title | Single line of text | Yes |
+| CVE | Single line of text | No |
+| Vendor | Single line of text | Yes |
+| Severity | Choice | Yes |
+| AdvisorySummary | Multiple lines of text | Yes |
+| RecommendedActions | Multiple lines of text | Yes |
+| VendorReference | Hyperlink | No |
+| PublishedDate | Date only | Yes |
+| LastUpdated | Date only | No |
+
+Severity choices:
+
+- Critical
+- High
+- Medium
+- Low
+
+Use SharePoint's built-in ID, Created, Modified, Created By, and Modified By fields.
+
+Enable list versioning.
+
+Use standard SharePoint field types.
+
+Avoid unnecessary calculated fields or complex JSON.
+
+### Severity formatting
+
+Apply simple, accessible visual formatting:
+
+- Critical: Red
+- High: Orange
+- Medium: Yellow
+- Low: Green
+
+Use supported SharePoint column-formatting JSON where practical.
+
+Do not rely on color alone to communicate severity.
+
+### List views
+
+Create:
+
+**Latest Advisories**
+- Default view
+- Sort by PublishedDate descending
+- Show Severity, Title, CVE, Vendor, PublishedDate, LastUpdated
+
+**Critical Advisories**
+- Filter Severity = Critical
+- Sort by PublishedDate descending
+
+**High Severity Advisories**
+- Filter Severity = High
+- Sort by PublishedDate descending
+
+**All Advisories**
+- Display all records
+- Sort by PublishedDate descending
+
+Ensure users can open advisory records to read full details.
+
+---
+
+# 6. SHAREPOINT SITE PAGE DESIGN
+
+Create a professional, modern Site Page named:
+
+**Security Advisory Center**
+
+Suggested filename:
+
+`Security-Advisory-Center.aspx`
+
+The page should resemble a polished cybersecurity advisory portal while using standard SharePoint web parts.
+
+### Design principles
+
+- Clean, professional enterprise design.
+- Minimal unnecessary graphics.
+- Easy navigation.
+- Accessible text and contrast.
+- Responsive layout.
+- Native SharePoint web parts.
+- No custom JavaScript.
+- No SPFx unless absolutely unavoidable.
+- No Power BI or custom dashboards.
+
+### Required page content
+
+#### Header
+
+Title:
+
+**Security Advisory Center**
+
+Subtitle:
+
+**Critical Vulnerabilities, Zero-Day Advisories & Emerging Cybersecurity Threats**
+
+Introduction:
+
+"Welcome to our Security Advisory Center. This page provides general awareness of critical vulnerabilities, zero-day security issues, and emerging cybersecurity threats affecting enterprise technologies."
+
+#### Important disclaimer
+
+Display prominently:
+
+"Security advisories are provided for general awareness and do not indicate that your organization is affected by a particular vulnerability. Where confirmed exposure is identified, remediation and client notification will continue through our established service management and security response processes."
+
+#### Section 1: Latest Security Advisories
+
+Embed the `SecurityAdvisories` Microsoft List using the native SharePoint List web part.
+
+Use the Latest Advisories view.
+
+Ensure clients can open individual advisories to read the full summary and recommended actions.
+
+#### Section 2: Critical Advisories
+
+Provide a clear link to the Critical Advisories list view.
+
+Do not build a separate dashboard.
+
+#### Section 3: Security Resources
+
+Provide verified links to:
+
+- CISA Known Exploited Vulnerabilities Catalog
+- National Vulnerability Database
+- CISA Cybersecurity Advisories
+
+#### Section 4: Contact and Escalation
+
+Include a brief explanation of how clients should contact the MSP/MSSP regarding urgent cybersecurity concerns.
+
+Use placeholders for company-specific contact information.
+
+Do not invent email addresses or telephone numbers.
+
+---
+
+# 7. MANUAL PUBLISHING PROCESS
+
+Do not implement automated approvals.
+
+Authorized engineers will publish advisories manually after completing the organization's existing review process.
+
+### Publishing workflow
+
+1. Engineer identifies a relevant vulnerability.
+2. Engineer verifies the vulnerability details against authoritative sources.
+3. Engineer prepares a concise advisory.
+4. The advisory is reviewed internally using existing procedures.
+5. An authorized publisher opens the Microsoft List.
+6. The publisher creates a new record.
+7. The advisory becomes visible to clients.
+8. The publisher updates the record as new information becomes available.
+
+### Advisory content standards
+
+Every advisory should:
+
+- Clearly identify the vulnerability.
+- State the relevant CVE, if available.
+- Identify the vendor.
+- Specify severity.
+- Provide a concise description.
+- Explain potential impact without exaggeration.
+- Include recommended defensive actions.
+- Link to authoritative vendor documentation.
+- Avoid claiming client exposure.
+- Avoid disclosing confidential information.
+
+Create a short engineer-facing publishing SOP.
+
+Explain clearly that saving an item publishes it immediately.
+
+---
+
+# 8. CLIENT GUEST ACCESS
+
+The final production page will be hosted in an existing SharePoint site that supports external guest authentication.
+
+Use Microsoft Entra B2B guest authentication.
+
+### Requirements
+
+- Clients must authenticate.
+- Clients must have read-only access.
+- Clients must not edit or delete advisories.
+- Clients must not access unauthorized internal SharePoint content.
+- Existing site security controls must remain intact.
+- Guest permissions must be tested with an actual external account.
+
+Document how to:
+
+1. Grant an approved guest access to the advisory page.
+2. Grant read access to the Microsoft List.
+3. Confirm the guest can open advisory records.
+4. Prevent guest editing.
+5. Revoke guest access.
+6. Troubleshoot access denied errors.
+
+Do not assume granting access to a page automatically grants access to the underlying Microsoft List.
+
+Do not add guests to broad site groups without reviewing what other content those groups expose.
+
+Do not modify tenant-wide external sharing or Conditional Access policies.
+
+If safe isolation is not possible within the destination site's existing permission structure, explain the limitation before deployment.
+
+---
+
+# 9. DEPLOYMENT AUTOMATION
+
+Use the fastest supported implementation method.
+
+Evaluate:
+
+- PnP PowerShell
+- SharePoint Online Management Shell
+- Microsoft Graph
+- Existing authenticated Microsoft 365 administration tools
+
+Prefer supported PowerShell provisioning where appropriate.
+
+### Generate a deployment package containing
+
+`README.md`
+
+`config.example.psd1`
+
+`Deploy-SecurityAdvisoryCenter.ps1`
+
+`Test-SecurityAdvisoryCenter.ps1`
+
+`severity-formatting.json`
+
+`sample-advisories.csv`
+
+`Publishing-SOP.md`
+
+`Guest-Access-Guide.md`
+
+`Migration-Guide.md`
+
+`Rollback-Guide.md`
+
+If a different file structure is technically more appropriate, explain why.
+
+### Deployment script requirements
+
+The deployment script should:
+
+- Accept a target SharePoint site URL.
+- Authenticate securely.
+- Validate required permissions.
+- Check whether the list exists.
+- Create the list if absent.
+- Create missing columns.
+- Configure required field settings.
+- Configure severity choices.
+- Enable versioning.
+- Create or update required list views safely.
+- Apply column formatting.
+- Create the Site Page if absent.
+- Add required page content.
+- Configure the List web part where supported.
+- Avoid overwriting unrelated site content.
+- Produce a clear deployment result.
+- Support repeat execution without creating duplicate resources.
+
+Verify all commands against current official documentation.
+
+Do not invent unsupported PnP PowerShell parameters or SharePoint API capabilities.
+
+If the List web part or modern Site Page layout cannot be reliably automated, generate the rest and provide exact manual instructions.
+
+### Safety requirements
+
+Before making tenant changes:
+
+- Present the proposed change summary.
+- Confirm the target site.
+- Identify required permissions.
+- Request explicit authorization.
+
+Do not execute destructive operations without approval.
+
+Do not request passwords or tokens pasted into chat.
+
+---
+
+# 10. TESTING
+
+Create an acceptance checklist and perform available tests.
+
+Required checks:
+
+- Microsoft List exists.
+- Columns match specification.
+- Severity choices work.
+- Required fields are enforced.
+- List versioning is enabled.
+- Views work correctly.
+- Site Page exists.
+- List web part displays advisories.
+- Advisory detail forms are readable.
+- Publishers can add and edit advisories.
+- Guest users can view published advisories.
+- Guest users cannot edit or delete advisories.
+- Guests cannot access unrelated internal content.
+- Development URLs are not hard-coded into production.
+- Site Page works on desktop and mobile.
+- Migration can be repeated safely.
+
+Do not claim that tests passed unless they were actually executed.
+
+---
+
+# 11. SAMPLE DATA
+
+Generate three fictional advisory records for testing:
+
+1. Critical network appliance vulnerability.
+2. Critical enterprise application vulnerability.
+3. High-severity operating system vulnerability.
+
+Clearly mark them as demonstration records.
+
+Do not invent real CVE identifiers.
+
+Do not load demonstration records into the guest-accessible production site without explicit approval.
+
+---
+
+# 12. DOCUMENTATION
+
+Provide concise, practical documentation.
+
+Required:
+
+1. Deployment instructions.
+2. Manual configuration instructions for any unsupported automation.
+3. Security engineer publishing guide.
+4. Guest access instructions.
+5. Development-to-production migration guide.
+6. Acceptance test checklist.
+7. Rollback instructions.
+
+Keep documentation short enough for a Microsoft 365 administrator to use without unnecessary complexity.
+
+---
+
+# 13. COST AND APPROVAL REQUIREMENTS
+
+Use existing Microsoft 365 capabilities.
+
+Do not introduce recurring infrastructure costs.
+
+Do not introduce premium licenses unless a verified technical requirement makes them unavoidable.
+
+Identify any existing Microsoft 365 licensing limitations.
+
+Do not bypass existing security, change management, or leadership approval requirements.
+
+Distinguish between:
+
+- Work possible with current site permissions.
+- Work requiring SharePoint administration.
+- Work requiring tenant-wide changes.
+- Work requiring organizational authorization.
+
+---
+
+# 14. DEFINITION OF DONE
+
+The MVP is complete when:
+
+- One Site Page exists in the target SharePoint site.
+- One Microsoft List stores published advisories.
+- The Site Page displays the list.
+- The list supports the specified fields and views.
+- Authorized engineers can publish advisories manually.
+- Approved client guests can read advisories.
+- Guests cannot edit advisories.
+- No confidential information is exposed.
+- The solution can be recreated in another SharePoint site.
+- No Power BI, Power Automate, or additional infrastructure is required.
+
+---
+
+# 15. IMPLEMENTATION INSTRUCTIONS
+
+Do not stop after producing an architecture diagram or implementation plan.
+
+Start creating the actual implementation artifacts.
+
+Proceed autonomously with non-destructive offline work.
+
+Ask for approval before authenticated tenant modifications.
+
+Do not claim to have deployed anything unless you actually executed and verified it.
+
+At the end, provide:
+
+**Completed and verified**
+- Actual implementation results.
+
+**Ready to deploy**
+- Generated scripts and artifacts.
+
+**Manual actions required**
+- Only tasks that cannot safely be automated.
+
+**Production readiness**
+- Outstanding security and guest access checks.
+
+**Estimated remaining effort**
+- Realistic time needed to finish deployment.
+
+## START NOW
+
+Begin by determining which Microsoft 365 and SharePoint deployment tools are available.
+
+Then generate the complete implementation package.
+
+Prioritize the simplest supported method to create:
+
+**One SharePoint Site Page + One Microsoft List + Manual Advisory Publishing**
+
+The solution must initially work in an existing internal development site and be portable to another existing guest-accessible site within the same Microsoft 365 tenant.
+
+
+
+## IMPORTANT: PRODUCTION SHAREPOINT URL IS NOT YET AVAILABLE
+
+The guest-accessible production SharePoint site URL is currently unknown.
+
+Do not ask for it or delay development because of this.
+
+Build the complete Security Advisory Center in my existing development SharePoint site.
+
+Generate a reusable, parameterized deployment package that accepts a target SharePoint site URL at execution time.
+
+The deployment package must:
+
+1. Create or validate the `SecurityAdvisories` Microsoft List.
+2. Configure all columns, views, versioning, and severity formatting.
+3. Create the `Security Advisory Center` Site Page.
+4. Configure the page's List web part to reference the Microsoft List in the target site.
+5. Avoid hard-coded SharePoint URLs, site IDs, list GUIDs, and environment-specific references.
+6. Avoid overwriting existing content or permissions.
+7. Support deployment into another existing SharePoint site within the same Microsoft 365 tenant.
+8. Preserve the destination site's existing guest access configuration.
+9. Provide validation and rollback instructions.
+
+For now, complete all development work and tests that do not require the production URL.
+
+When the production URL becomes available, deployment should require only supplying that URL, reviewing the proposed changes, authorizing deployment, and validating client guest permissions.
+
+Do not add Power BI, Power Automate, additional SharePoint sites, or additional Microsoft Lists.
+
+Proceed with implementation immediately; once you have read all details and understand all requirements, objectives, goals; if you have any questions please pause and ask me a question so I can provide clarity.
+
+Do not expand the scope beyond these requirements.
